@@ -29,8 +29,8 @@ def scrape_data_point():
 
     if req.ok:
         soup = bs4.BeautifulSoup(req.text, "html.parser")
-        target_element = soup.find("a", class_="frontpage-link")
-        data_point = "" if target_element is None else target_element.text
+        target_element = soup.select(".story.sidebar-story a.frontpage-link.small-link")
+        data_point = [element.text.strip() for element in target_element[:6]]
         loguru.logger.info(f"Data point: {data_point}")
         return data_point
 
